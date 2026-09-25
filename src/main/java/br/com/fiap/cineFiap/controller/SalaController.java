@@ -28,6 +28,7 @@ public class SalaController {
 
     }
 
+    @GetMapping
     public List<Sala> salasEmCartaz(){
         return dao.listar();
     }
@@ -38,6 +39,7 @@ public class SalaController {
             dao.excluir(id);
 
     }
+
 
     public void alterar( Long id, Sala objeto){
 
