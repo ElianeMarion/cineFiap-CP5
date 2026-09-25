@@ -4,6 +4,7 @@ import br.com.fiap.cineFiap.dao.SalaDAO;
 import br.com.fiap.cineFiap.models.Sala;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SalaService {
     private final SalaDAO salaDAO;
@@ -15,7 +16,7 @@ public class SalaService {
         if(salaDAO.listar() != null){
             return salaDAO.listar();
         }
-        throw new IllegalArgumentException("Nenhuma sala encontrada");
+        throw new IllegalArgumentException("Nenhuma sala");
     }
 
     public Sala buscarPorId(Long id){
@@ -36,5 +37,19 @@ public class SalaService {
         }else{
             salaDAO.cadastrar(sala);
         }
+    }
+
+    public void alterar(Long id, Sala sala){
+        if(!Objects.equals(id, sala.getId())){
+            throw new IllegalArgumentException("Erro ao consultar ID");
+        }
+        Sala salaExistente = buscarPorId(id);
+        if(salaExistente == null){
+            throw new IllegalArgumentException("Sala não existente");
+        }
+        if(salaExistente.getDataExclusao() != null){
+            throw new IllegalArgumentException("Sala inativa");
+        }
+        salaDAO.alterar(sala);
     }
 }

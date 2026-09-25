@@ -54,12 +54,16 @@ public class SalaController {
 //            dao.excluir(id);
 //
 //    }
-//
-//    @PutMapping
-//    public void alterar(Sala objeto){
-//
-//            dao.alterar(objeto);
-//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> alterar(@PathVariable Long id, @RequestBody Sala objeto){
+        var sala = service.buscarPorId(id);
+        if(Objects.equals(sala.getId(), objeto.getId())){
+            service.alterar(id, objeto);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 //
 //    @PutMapping
 //    public void deletar(@PathVariable Long id){
