@@ -47,16 +47,22 @@ public class SalaController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> alterar(@PathVariable Long id, @RequestBody Sala sala) {
+        try {
+            salaService.alterar(id, sala);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public List<Sala> salasEmCartaz(){
         return dao.listar();
     }
 
     public void excluir(Long id){
         dao.excluir(id);
-    }
-
-    public void alterar(Long id, Sala objeto){
-        dao.alterar(objeto);
     }
 
     public void deletar(@PathVariable Long id){
