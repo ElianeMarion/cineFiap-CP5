@@ -21,4 +21,11 @@ public class SalaController {
     public ResponseEntity<List<Sala>> salasAtivas(){
         return ResponseEntity.ok(service.salasAtivas());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){
+        var sala = service.buscarPorId(id);
+        if(sala.getId() != null && sala.getDataExclusao() == null)
+            return ResponseEntity.ok(sala);
+        return ResponseEntity.notFound().build();
+    }
 }

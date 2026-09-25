@@ -27,4 +27,8 @@ public class SalaService {
         }
         return ativas;
     }
+    public Sala buscarPorId(Long id){
+        var sala = salaDAO.buscarPorId(id);
+        return sala;
+    }
 }
