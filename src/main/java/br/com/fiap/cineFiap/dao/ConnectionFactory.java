@@ -1,4 +1,3 @@
-// Camila de Sousa Santana e Sophia Teixeira Ramada
 package br.com.fiap.cineFiap.dao;
 
 import java.sql.Connection;

@@ -1,4 +1,4 @@
-package br.com.fiap.cineFiap.service;
+package br.com.fiap.cineFiap.Service;
 
 import br.com.fiap.cineFiap.dao.SalaDAO;
 import br.com.fiap.cineFiap.models.Sala;
@@ -20,4 +20,9 @@ public class SalaService {
         }
         return ativas;
     }
+
+    public Sala buscarPorId(Long id) {
+        return dao.buscarPorId(id);
+    }
+
 }
