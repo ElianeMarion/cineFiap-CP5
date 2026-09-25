@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SalaService {
@@ -50,5 +51,22 @@ public class SalaService {
                     "Uma sala nova não pode possuir data de exclusão.");
         }
         salaDAO.cadastrar(sala);
+    }
+    public void alterar(Long id, Sala sala){
+        var salaExistente = salaDAO.buscarPorId(id);
+
+        if (salaExistente.getId() == null){
+            System.out.println("ERRO: Sala não encontrada.");
+            throw new IllegalArgumentException("Sala não encontrada");
+        }
+        if (salaExistente.getDataExclusao() != null){
+            System.out.println("ERRO: A sala está inativa.");
+            throw new IllegalArgumentException("A sala está inativa");
+        }
+        if (!Objects.equals(salaExistente.getId(), sala.getId())){
+            System.out.println("ERRO: O id informado não corresponde à sala.");
+            throw new IllegalArgumentException("O id informado não corresponde ao da sala");
+        }
+        salaDAO.alterar(sala);
     }
 }

@@ -41,4 +41,14 @@ public class SalaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao cadastrar a sala: " + e.getMessage());
         }
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> alterar(@PathVariable Long id,
+                                        @RequestBody Sala objeto){
+        try{
+            service.alterar(id, objeto);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
