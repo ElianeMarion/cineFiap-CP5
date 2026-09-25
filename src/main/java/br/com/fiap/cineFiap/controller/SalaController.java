@@ -22,11 +22,10 @@ public class SalaController {
 
     private SalaDAO dao = new SalaDAO();
 
-
-    public void cadastrar( Sala sala){
-
-            dao.cadastrar(sala);
-
+    @PostMapping("/criar")
+    public ResponseEntity<Void> cadastrar(@RequestBody Sala sala){
+        service.inserirSala(sala);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
