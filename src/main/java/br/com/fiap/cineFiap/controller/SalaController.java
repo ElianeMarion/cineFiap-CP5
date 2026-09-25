@@ -28,14 +28,17 @@ public class SalaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable Long id) {
-        Sala sala = service.buscarPorId(id);
 
-        if (sala.getId() == null) {
+        try {
+            Sala sala = service.buscarPorId(id);
+            return ResponseEntity.ok(sala);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(sala);
     }
+
+
+
 
     public List<Sala> salasEmCartaz(){
         return service.listar();

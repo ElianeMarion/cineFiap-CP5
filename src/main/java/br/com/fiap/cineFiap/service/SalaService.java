@@ -33,7 +33,7 @@ public class SalaService {
             throw new IllegalArgumentException("id nao pode ser nulo");
 
         var lista = saladao.buscarPorId(id);
-        if (lista.getId() == 0)
+        if (lista.getId() == null)
             throw new FilmeNaoExisteException("filme nao achou");
         return lista;
     }
