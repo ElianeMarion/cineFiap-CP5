@@ -20,12 +20,16 @@ public class SalaController {
         this.service = new SalaService();
     }
 
-//    @PostMapping
-//    public void cadastrar( Sala sala){
-//
-//            dao.cadastrar(sala);
-//
-//    }
+    @PostMapping
+    public ResponseEntity<Void> cadastrar(@RequestBody Sala sala){
+        try{
+            service.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch(IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){

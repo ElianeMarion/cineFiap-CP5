@@ -25,4 +25,16 @@ public class SalaService {
         }
         throw new IllegalArgumentException("Nenhuma sala encontrada");
     }
+
+    public void cadastrar(Sala sala){
+        if(sala.getPreco() < 0){
+            throw new RuntimeException("Dados incompletos");
+        } else if (sala.getNome() == null) {
+            throw new RuntimeException("Dados incompletos");
+        } else if (sala.getDataExclusao() != null) {
+            throw new RuntimeException("Não foi possível cadastrar");
+        }else{
+            salaDAO.cadastrar(sala);
+        }
+    }
 }
