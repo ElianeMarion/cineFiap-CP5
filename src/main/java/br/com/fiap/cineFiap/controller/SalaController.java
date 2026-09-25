@@ -44,12 +44,16 @@ public class SalaController {
         return salaService.listar();
     }
 
-
-    public void excluir ( Long id){
-
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
+        try {
             salaService.excluir(id);
-
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> alterar(@PathVariable Long id, @RequestBody Sala objeto) {
@@ -59,13 +63,5 @@ public class SalaController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
-
-
-    public void deletar(@PathVariable Long id){
-
-            salaService.deletar(id);
-
-
     }
 }
