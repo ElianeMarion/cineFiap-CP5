@@ -27,8 +27,28 @@ public class SalaService {
         }
         return ativas;
     }
+
     public Sala buscarPorId(Long id){
         var sala = salaDAO.buscarPorId(id);
         return sala;
+    }
+
+    public void cadastrar(Sala sala){
+        if (sala.getNome() == null || sala.getNome().isBlank()){
+            System.out.println("ERRO: O nome da sala é obrigatório.");
+            throw new IllegalArgumentException(
+                    "O nome da sala é obrigatório.");
+        }
+        if (sala.getPreco() <= 0){
+            System.out.println("ERRO: O preço deve ser maior que zero.");
+            throw new IllegalArgumentException(
+                    "O preço deve ser maior que zero.");
+        }
+        if (sala.getDataExclusao() != null){
+            System.out.println("ERRO: Uma sala nova não pode possuir data de exclusão.");
+            throw new IllegalArgumentException(
+                    "Uma sala nova não pode possuir data de exclusão.");
+        }
+        salaDAO.cadastrar(sala);
     }
 }
