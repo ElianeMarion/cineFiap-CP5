@@ -58,11 +58,9 @@ public class SalaController {
         return ResponseEntity.ok().build();
     }
 
-
-    public void deletar(@PathVariable Long id){
-
-            dao.deletar(id);
-
-
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        service.excluirSala(id);
+        return ResponseEntity.ok().build();
     }
 }

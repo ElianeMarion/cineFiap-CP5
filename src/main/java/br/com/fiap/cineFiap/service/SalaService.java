@@ -53,6 +53,19 @@ public class SalaService {
             throw e;
         }
     }
+
+    public void excluirSala(Long id){
+        var sala = salaDAO.buscarPorId(id);
+        try{
+            if (sala.getDataExclusao() != null){
+                throw new IllegalArgumentException("A sala não pode já ter sido excluída");
+            }
+            salaDAO.deletar(id);
+        } catch (IllegalArgumentException e){
+            throw e;
+        }
+
+    }
 }
 
 
