@@ -36,4 +36,13 @@ public class SalaService {
             throw new FilmeNaoExisteException("filme nao achou");
         return lista;
     }
+
+    public void cadastrar(Sala sala) {
+        if (sala == null)
+            throw new IllegalArgumentException("nao pode ser nulo");
+        if (sala.getNome() == null)
+            throw new IllegalArgumentException("nome nao pode ser nulo");
+
+        saladao.cadastrar(sala);
+    }
 }

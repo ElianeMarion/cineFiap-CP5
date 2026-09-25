@@ -15,12 +15,18 @@ import java.util.Objects;
 public class SalaController {
     private SalaDAO dao = new SalaDAO();
 
-
-    public void cadastrar( Sala sala){
-
+    @PostMapping
+    public ResponseEntity cadastrar(@RequestBody Sala sala){
+        try {
             dao.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).body("sala cadastro");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("deu erro no cadastro: " + e.getMessage());
+        }
 
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable Long id) {
