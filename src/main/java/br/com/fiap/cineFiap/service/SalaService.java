@@ -21,5 +21,19 @@ public class SalaService {
         return salaDAO.buscarPorId(id);
     }
 
+    public Sala cadastrar(Sala sala) {
+        if (sala.getNome() == null || sala.getNome().isBlank()) {
+            throw new IllegalArgumentException("O nome da sala é obrigatório.");
+        }
+        if (sala.getPreco() <= 0) {
+            throw new IllegalArgumentException("O preço deve ser maior que zero.");
+        }
+
+        sala.setDataExclusao(null);
+
+        salaDAO.cadastrar(sala);
+        return sala;
+    }
+
 }
 
