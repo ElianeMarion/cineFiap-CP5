@@ -26,22 +26,6 @@ public class SalaController {
                 .body(salaCadastrada);
     }
 
-    public List<Sala> salasEmCartaz() {
-        return dao.listar();
-    }
-
-    public void excluir(Long id) {
-        dao.excluir(id);
-    }
-
-    public void alterar(Long id, Sala objeto) {
-        dao.alterar(objeto);
-    }
-
-    public void deletar(@PathVariable Long id) {
-        dao.deletar(id);
-    }
-
     @GetMapping
     public List<Sala> listar() {
         return dao.listar();
@@ -58,5 +42,21 @@ public class SalaController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-}
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> alterar(
+            @PathVariable Long id,
+            @RequestBody Sala sala) {
+
+        try {
+
+            salaService.alterar(id, sala);
+
+            return ResponseEntity.ok().build();
+
+        } catch (IllegalArgumentException e) {
+
+            return ResponseEntity.badRequest().build();
+        }
+    }
+}

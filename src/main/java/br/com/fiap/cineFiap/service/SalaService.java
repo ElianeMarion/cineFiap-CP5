@@ -36,4 +36,25 @@ public class SalaService {
 
         return dao.cadastrar(sala);
     }
+
+    public void alterar(Long id, Sala sala) {
+
+        Sala salaExistente = dao.buscarPorId(id);
+
+        if (salaExistente == null) {
+            throw new IllegalArgumentException("Sala não encontrada.");
+        }
+
+        if (salaExistente.getDataExclusao() != null) {
+            throw new IllegalArgumentException("A sala está excluída.");
+        }
+
+        if (!id.equals(sala.getId())) {
+            throw new IllegalArgumentException(
+                    "O ID da URL deve ser igual ao ID da sala."
+            );
+        }
+
+        dao.alterar(sala);
+    }
 }

@@ -110,16 +110,19 @@ public class SalaDAO {
         }
         return sala;
     }
-    public void alterar(Sala sala){
+
+    public void alterar(Sala sala) {
         conexao = ConnectionFactory.obterConexao();
         PreparedStatement comandoSql = null;
 
-        try{
+        try {
             String sql = "update TBL_SALA set TX_NOME = ?, NR_PRECO = ?, DT_EXCLUSAO = ? where ID_SALA = ?";
 
             comandoSql = conexao.prepareStatement(sql);
+
             comandoSql.setString(1, sala.getNome());
             comandoSql.setDouble(2, sala.getPreco());
+
             if (sala.getDataExclusao() != null) {
                 comandoSql.setTimestamp(3,
                         Timestamp.valueOf(sala.getDataExclusao())
@@ -127,8 +130,11 @@ public class SalaDAO {
             } else {
                 comandoSql.setNull(3, java.sql.Types.TIMESTAMP);
             }
+
             comandoSql.setLong(4, sala.getId());
+
             comandoSql.executeUpdate();
+
             comandoSql.close();
             conexao.close();
 
@@ -173,6 +179,8 @@ public class SalaDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
 }
