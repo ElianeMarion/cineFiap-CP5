@@ -13,8 +13,8 @@ public class SalaService {
     private final SalaDAO saladao;
 
 
-    public SalaService(SalaDAO saladao) {
-        this.saladao = saladao;
+    public SalaService() {
+        this.saladao = new SalaDAO();
     }
 
 
@@ -52,7 +52,7 @@ public class SalaService {
             throw new IllegalArgumentException("nao pode ser nulo");
 
         var existe = saladao.buscarPorId(sala.getId());
-        if (existe != null) {
+        if (existe.getId() != null) {
             saladao.alterar(sala);
         } else {
             throw new FilmeNaoExisteException("pai, nao acho nada");

@@ -1,24 +1,22 @@
 package br.com.fiap.cineFiap.controller;
 
-import br.com.fiap.cineFiap.dao.SalaDAO;
-import br.com.fiap.cineFiap.exceptions.FilmeNaoExisteException;
 import br.com.fiap.cineFiap.models.Sala;
+import br.com.fiap.cineFiap.service.SalaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/salas")
 public class SalaController {
-    private SalaDAO dao = new SalaDAO();
+    private SalaService service = new SalaService();
 
     @PostMapping
     public ResponseEntity cadastrar(@RequestBody Sala sala){
         try {
-            dao.cadastrar(sala);
+            service.cadastrar(sala);
             return ResponseEntity.status(HttpStatus.CREATED).body("sala cadastro");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("deu erro no cadastro: " + e.getMessage());
@@ -30,7 +28,7 @@ public class SalaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable Long id) {
-        Sala sala = dao.buscarPorId(id);
+        Sala sala = service.buscarPorId(id);
 
         if (sala.getId() == null) {
             return ResponseEntity.notFound().build();
@@ -40,35 +38,33 @@ public class SalaController {
     }
 
     public List<Sala> salasEmCartaz(){
-        return dao.listar();
+        return service.listar();
     }
 
     @PutMapping("/excluir/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         try {
-            dao.excluir(id);
+            service.excluir(id);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> alterar(@PathVariable Long id, @RequestBody Sala sala) {
         try {
             sala.setId(id);
-            dao.alterar(sala);
+            service.alterar(sala);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-
     @GetMapping
     public ResponseEntity<List<Sala>> listar() {
-        return ResponseEntity.ok(dao.listar());
+        return ResponseEntity.ok(service.listar());
     }
 
 
