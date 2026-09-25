@@ -22,11 +22,11 @@ public class SalaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Sala> buscarPorId(@PathVariable long id){
-        Sala sala = new Sala();
-        if (sala.getId() != null){
-            return ResponseEntity.ok(salaService.buscaPorId(id));
+        Sala sala = salaService.buscaPorId(id);
+        if (sala.getId() == null){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(salaService.buscaPorId(id));
     }
 
     @PostMapping
