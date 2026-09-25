@@ -16,4 +16,10 @@ public class SalaService {
     public List<Sala> listar() {
         return salaDAO.listar();
     }
+
+    public Sala buscarPorId(Long id) {
+        return salaDAO.buscarPorId(id);
+    }
+
 }
+
