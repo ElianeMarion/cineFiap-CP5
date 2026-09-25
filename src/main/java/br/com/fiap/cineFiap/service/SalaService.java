@@ -57,4 +57,15 @@ public class SalaService {
         return sala;
     }
 
+    public void excluir(Long id) {
+        Sala sala = salaDAO.buscarPorId(id);
+        if (sala.getId() == null) {
+            throw new IllegalArgumentException("Sala não encontrada.");
+        }
+        if (sala.getDataExclusao() != null) {
+            throw new IllegalArgumentException("Sala já está inativa.");
+        }
+        salaDAO.deletar(id);
+    }
+
 }
