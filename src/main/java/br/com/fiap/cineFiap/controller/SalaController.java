@@ -3,6 +3,7 @@ package br.com.fiap.cineFiap.controller;
 import br.com.fiap.cineFiap.dao.SalaDAO;
 import br.com.fiap.cineFiap.models.Sala;
 import br.com.fiap.cineFiap.service.SalaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +37,14 @@ public class SalaController {
         return ResponseEntity.ok(sala);
     }
 
-    public void cadastrar(Sala sala){
-        dao.cadastrar(sala);
+    @PostMapping
+    public ResponseEntity<?> cadastrar(@RequestBody Sala sala) {
+        try {
+            salaService.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public List<Sala> salasEmCartaz(){
