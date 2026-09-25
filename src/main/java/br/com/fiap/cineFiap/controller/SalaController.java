@@ -48,4 +48,14 @@ public class SalaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala não alterada. Erro: " + e.getMessage());
         }
     }
+
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<String> excluir(@PathVariable long id){
+        try{
+            salaService.excluir(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Sala excluída com SUCESSO");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala não excluída. Erro: " + e.getMessage());
+        }
+    }
 }
