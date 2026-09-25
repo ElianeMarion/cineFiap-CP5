@@ -1,4 +1,3 @@
-// Camila de Sousa Santana e Sophia Teixeira Ramada
 package br.com.fiap.cineFiap.dao;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ public class ConnectionFactory {
         try{
             conexao = DriverManager.getConnection(
                     "jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl",
-                    "usuario", "senha");
+                    "rm570017", "190707");
         } catch (SQLException e){
             throw new RuntimeException(e);
         }
