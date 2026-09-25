@@ -11,24 +11,34 @@ public class SalaDAO {
 
     private Connection conexao;
 
-    public void cadastrar(Sala sala){
-        conexao = ConnectionFactory.obterConexao();
-        PreparedStatement comandoSql = null;
+    public Sala cadastrar(Sala sala) {
+        String sql = """ 
+            INSERT INTO TBL_SALA (TX_NOME, NR_PRECO, DT_EXCLUSAO)  
+            VALUES (?, ?, ?) 
+            """;
 
-        try{
-            String sql = "insert into TBL_SALA (TX_NOME, NR_PRECO)" +
-                    "values(?, ?)";
+        try (
+                Connection conexao = ConnectionFactory.obterConexao();
+                PreparedStatement stmt = conexao.prepareStatement(
+                        sql,
+                        new String[]{"ID_SALA"}
+                )
+        ) {
 
-            comandoSql = conexao.prepareStatement(sql);
-            comandoSql.setString(1, sala.getNome());
-            comandoSql.setDouble(2, sala.getPreco());
+            stmt.setString(1, sala.getNome());
+            stmt.setDouble(2, sala.getPreco());
+            stmt.setTimestamp(3, null);
 
-            comandoSql.executeUpdate();
-            comandoSql.close();
-            conexao.close();
+            stmt.executeUpdate(); ResultSet rs = stmt.getGeneratedKeys();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            if (rs.next()) {
+                sala.setId(rs.getLong(1));
+            }
+
+            return sala;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao cadastrar sala.", e);
         }
     }
 
@@ -100,16 +110,19 @@ public class SalaDAO {
         }
         return sala;
     }
-    public void alterar(Sala sala){
+
+    public void alterar(Sala sala) {
         conexao = ConnectionFactory.obterConexao();
         PreparedStatement comandoSql = null;
 
-        try{
+        try {
             String sql = "update TBL_SALA set TX_NOME = ?, NR_PRECO = ?, DT_EXCLUSAO = ? where ID_SALA = ?";
 
             comandoSql = conexao.prepareStatement(sql);
+
             comandoSql.setString(1, sala.getNome());
             comandoSql.setDouble(2, sala.getPreco());
+
             if (sala.getDataExclusao() != null) {
                 comandoSql.setTimestamp(3,
                         Timestamp.valueOf(sala.getDataExclusao())
@@ -117,8 +130,11 @@ public class SalaDAO {
             } else {
                 comandoSql.setNull(3, java.sql.Types.TIMESTAMP);
             }
+
             comandoSql.setLong(4, sala.getId());
+
             comandoSql.executeUpdate();
+
             comandoSql.close();
             conexao.close();
 
@@ -163,6 +179,8 @@ public class SalaDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
 }
