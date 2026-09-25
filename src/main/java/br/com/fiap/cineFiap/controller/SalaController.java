@@ -22,11 +22,15 @@ public class SalaController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Sala> buscarPorId(@PathVariable Long id) {
+        Sala sala = dao.buscarPorId(id);
 
-    public Sala buscarPorId( Long id){
-        return  dao.buscarPorId(id);
+        if (sala.getId() == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-
+        return ResponseEntity.ok(sala);
     }
 
     public List<Sala> salasEmCartaz(){

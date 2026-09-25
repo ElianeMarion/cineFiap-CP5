@@ -25,4 +25,15 @@ public class SalaService {
 
         return salas;
     }
+
+
+    public Sala buscarPorId(Long id) {
+        if (id == null)
+            throw new IllegalArgumentException("id nao pode ser nulo");
+
+        var lista = saladao.buscarPorId(id);
+        if (lista.getId() == 0)
+            throw new FilmeNaoExisteException("filme nao achou");
+        return lista;
+    }
 }
