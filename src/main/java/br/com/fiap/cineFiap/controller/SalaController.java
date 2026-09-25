@@ -30,8 +30,13 @@ public class SalaController {
     }
 
 
-    public Sala buscarPorId( Long id){
-        return  dao.buscarPorId(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){
+        var sala = service.buscarPorId(id);
+        if (sala.getId() != null)
+            return ResponseEntity.ok(sala);
+        return ResponseEntity.notFound().build();
+
 
 
     }

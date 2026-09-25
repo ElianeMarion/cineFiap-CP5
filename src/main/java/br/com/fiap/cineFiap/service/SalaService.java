@@ -2,6 +2,7 @@ package br.com.fiap.cineFiap.service;
 
 import br.com.fiap.cineFiap.dao.SalaDAO;
 import br.com.fiap.cineFiap.models.Sala;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,5 +19,10 @@ public class SalaService {
         return salaDAO.listar();
     }
 
-
+    public Sala buscarPorId(Long id){
+        var sala = salaDAO.buscarPorId(id);
+        if (sala.getDataExclusao() == null)
+            return sala;
+        return null;
+    }
 }
