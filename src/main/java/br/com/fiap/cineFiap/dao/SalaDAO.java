@@ -1,12 +1,14 @@
 package br.com.fiap.cineFiap.dao;
 
 import br.com.fiap.cineFiap.models.Sala;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class SalaDAO {
 
     private Connection conexao;
