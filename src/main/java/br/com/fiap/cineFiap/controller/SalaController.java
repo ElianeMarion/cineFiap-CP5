@@ -1,54 +1,62 @@
 package br.com.fiap.cineFiap.controller;
 
-import br.com.fiap.cineFiap.dao.SalaDAO;
 import br.com.fiap.cineFiap.models.Sala;
+import br.com.fiap.cineFiap.service.SalaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/salas")
 public class SalaController {
-    private SalaDAO dao = new SalaDAO();
 
+    @Autowired
+    private SalaService service;
 
-    public void cadastrar( Sala sala){
-
-            dao.cadastrar(sala);
-
+    @GetMapping
+    public List<Sala> listar() {
+        return service.listar();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Sala> buscarPorId(@PathVariable Long id) {
+        Sala sala = service.buscarPorId(id);
+        if (sala == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-
-    public Sala buscarPorId( Long id){
-        return  dao.buscarPorId(id);
-
-
+        return ResponseEntity.ok(sala);
     }
-
-    public List<Sala> salasEmCartaz(){
-        return dao.listar();
+    @PostMapping
+    public ResponseEntity<Object> cadastrar(@RequestBody Sala sala) {
+        try {
+            Sala nova = service.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nova);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
-
-    public void excluir ( Long id){
-
-            dao.excluir(id);
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> alterar(@PathVariable Long id, @RequestBody Sala sala) {
+        try {
+            Sala atualizada = service.alterar(id, sala);
+            return ResponseEntity.ok(atualizada);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
-    public void alterar( Long id, Sala objeto){
-
-            dao.alterar(objeto);
-    }
-
-
-    public void deletar(@PathVariable Long id){
-
-            dao.deletar(id);
-
-
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<Object> excluir(@PathVariable Long id) {
+        try {
+            service.excluirLogicamente(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
+
+
+
