@@ -38,6 +38,7 @@ public class SalaDAO {
         List<Sala> salas = new ArrayList<>();
 
         try {
+            System.out.println("Teste se entra na listagem");
             ps = conexao.prepareStatement("select * from TBL_SALA");
             ResultSet rs = ps.executeQuery();
 
