@@ -1,7 +1,9 @@
 package br.com.fiap.cineFiap.controller;
 
 import br.com.fiap.cineFiap.dao.SalaDAO;
+import br.com.fiap.cineFiap.models.Filme;
 import br.com.fiap.cineFiap.models.Sala;
+import br.com.fiap.cineFiap.service.SalaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,43 +14,24 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/salas")
 public class SalaController {
-    private SalaDAO dao = new SalaDAO();
+    private final SalaService service;
 
+    public SalaController(){this.service = new SalaService();}
 
-    public void cadastrar( Sala sala){
-
-            dao.cadastrar(sala);
-
+    @GetMapping("/{id}")
+    public Filme buscarPorId(@PathVariable Integer Id){
+        return service.buscarPorId(id);}
+    @PostMapping
+    public void cadastrar(@RequestBody Sala sala){
+        SalaService.cadastrar(sala);
     }
-
-
-    public Sala buscarPorId( Long id){
-        return  dao.buscarPorId(id);
-
-
+    @PutMapping
+    public Filme alterar(Sala sala){
+        return service.alterar(sala);
     }
+    @PutMapping
+    public Filme delete(Sala sala)
+        return SalaService.delete(sala);
 
-    public List<Sala> salasEmCartaz(){
-        return dao.listar();
-    }
-
-
-    public void excluir ( Long id){
-
-            dao.excluir(id);
-
-    }
-
-    public void alterar( Long id, Sala objeto){
-
-            dao.alterar(objeto);
-    }
-
-
-    public void deletar(@PathVariable Long id){
-
-            dao.deletar(id);
-
-
-    }
 }
+
