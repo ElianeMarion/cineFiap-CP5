@@ -60,4 +60,18 @@ public class SalaService {
 
         salaDAO.alterar(sala);
     }
+
+    public void excluirLogicamente(Long id) {
+        Sala existente = salaDAO.buscarPorId(id);
+
+        if (existente == null || existente.getId() == null) {
+            throw new IllegalArgumentException("Sala não encontrada.");
+        }
+
+        if (existente.getDataExclusao() != null) {
+            throw new IllegalArgumentException("Esta sala já está inativada.");
+        }
+
+        salaDAO.deletar(id); // o método deletar() do DAO já faz a exclusão lógica (preenche DT_EXCLUSAO)
+    }
 }
