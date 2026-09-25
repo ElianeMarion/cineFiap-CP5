@@ -53,4 +53,15 @@ public class SalaService {
         }
         dao.alterar(sala);
     }
+    public void deletar(Long id) {
+        Sala existente = dao.buscarPorId(id);
+
+        if (existente.getId() == null) {
+            throw new IllegalArgumentException("Sala não encontrada.");
+        }
+        if (existente.getDataExclusao() != null) {
+            throw new IllegalArgumentException("Sala já está inativa.");
+        }
+        dao.deletar(id);
+    }
 }
