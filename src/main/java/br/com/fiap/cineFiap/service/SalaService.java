@@ -16,7 +16,17 @@ public class SalaService {
                 .collect(Collectors.toList());
     }
 
+    public Sala buscarPorId(Long id) {
+        Sala sala = dao.buscarPorId(id);
 
+        if (sala.getId() == null) {
+            return null; // não existe
+        }
+        if (sala.getDataExclusao() != null) {
+            return null; // excluída logicamente
+        }
+        return sala;
+    }
 
 
 }
