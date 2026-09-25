@@ -29,6 +29,15 @@ public class SalaController {
 
         return ResponseEntity.ok(sala);
     }
-
+    @PostMapping
+    public ResponseEntity<Object> cadastrar(@RequestBody Sala sala) {
+        try {
+            Sala nova = service.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nova);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
+
 
