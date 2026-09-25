@@ -10,7 +10,7 @@ import java.util.List;
 public class SalaService {
     private SalaDAO salaDAO = new SalaDAO();
 
-    public List<Sala> listar(){
-        return salaDAO.listar();
-    }
+    public List<Sala> listar(){return salaDAO.listar();}
+
+    public Sala buscaPorId(long id) {return salaDAO.buscarPorId(id);}
 }
