@@ -25,10 +25,13 @@ public class SalaController {
 
     @GetMapping("/{id}")
     public ResponseEntity <Sala> buscarPorId (@PathVariable Long id){
+        Sala sala = salaService.buscarPorId(id);
+
+        if (sala == null) {
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok(sala);
-
-
     }
 
     @GetMapping
