@@ -45,4 +45,16 @@ public class SalaService {
 
         saladao.cadastrar(sala);
     }
+
+    public void alterar(Sala sala) {
+        if (sala == null || sala.getId() == null)
+            throw new IllegalArgumentException("nao pode ser nulo");
+
+        var existe = saladao.buscarPorId(sala.getId());
+        if (existe != null) {
+            saladao.alterar(sala);
+        } else {
+            throw new FilmeNaoExisteException("pai, nao acho nada");
+        }
+    }
 }

@@ -50,10 +50,17 @@ public class SalaController {
 
     }
 
-    public void alterar( Long id, Sala objeto){
-
-            dao.alterar(objeto);
+    @PutMapping("/{id}")
+    public ResponseEntity alterar(@PathVariable Long id, @RequestBody Sala sala) {
+        try {
+            sala.setId(id);
+            dao.alterar(sala);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
 
 
     public void deletar(@PathVariable Long id){
