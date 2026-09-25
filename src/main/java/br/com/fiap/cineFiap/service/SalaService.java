@@ -27,4 +27,18 @@ public class SalaService {
         return sala;
     }
 
+    public Sala cadastrar(Sala sala) {
+        if (sala.getNome() == null || sala.getNome().isBlank()) {
+            throw new IllegalArgumentException("O nome da sala é obrigatório.");
+        }
+        if (sala.getPreco() <= 0) {
+            throw new IllegalArgumentException("O preço da sala deve ser maior que zero.");
+        }
+        if (sala.getDataExclusao() != null) {
+            throw new IllegalArgumentException("Uma sala nova não pode possuir data de exclusão.");
+        }
+        salaDAO.cadastrar(sala);
+        return sala;
+    }
+
 }
