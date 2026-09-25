@@ -51,10 +51,14 @@ public class SalaController {
 
     }
 
-
-    public void alterar( Long id, Sala objeto){
-
-            salaService.alterar(objeto);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> alterar(@PathVariable Long id, @RequestBody Sala objeto) {
+        try {
+            Sala atualizada = salaService.alterar(id, objeto);
+            return ResponseEntity.ok(atualizada);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 
