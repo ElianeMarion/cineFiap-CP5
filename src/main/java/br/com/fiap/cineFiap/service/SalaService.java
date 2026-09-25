@@ -41,4 +41,20 @@ public class SalaService {
         return sala;
     }
 
+
+    public Sala alterar(Long id, Sala sala) {
+        if (!id.equals(sala.getId())) {
+            throw new IllegalArgumentException("O ID da URL não corresponde ao ID do objeto.");
+        }
+        Sala salaExistente = salaDAO.buscarPorId(id);
+        if (salaExistente.getId() == null) {
+            throw new IllegalArgumentException("Sala não encontrada.");
+        }
+        if (salaExistente.getDataExclusao() != null) {
+            throw new IllegalArgumentException("Sala inativa não pode ser alterada.");
+        }
+        salaDAO.alterar(sala);
+        return sala;
+    }
+
 }

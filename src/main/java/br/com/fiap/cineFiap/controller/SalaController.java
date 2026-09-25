@@ -38,4 +38,14 @@ public class SalaController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Sala> alterar(@PathVariable Long id, @RequestBody Sala sala) {
+        try {
+            Sala salaAlterada = salaService.alterar(id, sala);
+            return ResponseEntity.ok(salaAlterada);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
