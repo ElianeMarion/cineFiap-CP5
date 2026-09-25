@@ -26,4 +26,10 @@ public class SalaController {
         }
         return ResponseEntity.ok(sala);
     }
+    @PostMapping
+    public ResponseEntity<Sala> cadastrar(@RequestBody Sala sala) {
+        service.cadastrar(sala);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sala);
+    }
+
 }
