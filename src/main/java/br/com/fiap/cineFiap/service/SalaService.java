@@ -16,7 +16,7 @@ public class SalaService {
         if(salaDAO.listar() != null){
             return salaDAO.listar();
         }
-        throw new IllegalArgumentException("Nenhuma sala");
+        throw new IllegalArgumentException("Nenhuma sala encontrada");
     }
 
     public Sala buscarPorId(Long id){
@@ -51,5 +51,13 @@ public class SalaService {
             throw new IllegalArgumentException("Sala inativa");
         }
         salaDAO.alterar(sala);
+    }
+
+    public void deletar(Long id){
+        Sala salaExistente = buscarPorId(id);
+        if(salaExistente == null){
+            throw new IllegalArgumentException("Erro");
+        }
+        salaDAO.deletar(id);
     }
 }

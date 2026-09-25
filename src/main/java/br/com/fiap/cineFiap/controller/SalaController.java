@@ -64,12 +64,14 @@ public class SalaController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-//
-//    @PutMapping
-//    public void deletar(@PathVariable Long id){
-//
-//            dao.deletar(id);
-//
-//
-//    }
+
+    @PutMapping("/excluir/{ìd}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        try{
+            service.deletar(id);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }
