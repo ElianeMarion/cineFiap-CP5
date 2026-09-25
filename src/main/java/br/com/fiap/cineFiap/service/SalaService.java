@@ -5,6 +5,7 @@ import br.com.fiap.cineFiap.dao.SalaDAO;
 import br.com.fiap.cineFiap.exceptions.FilmeNaoExisteException;
 import br.com.fiap.cineFiap.models.Sala;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SalaService {
@@ -56,5 +57,22 @@ public class SalaService {
         } else {
             throw new FilmeNaoExisteException("pai, nao acho nada");
         }
+    }
+
+    public void excluir(Long id) {
+
+        var sala = saladao.buscarPorId(id);
+
+        if (sala == null || sala.getId() == 0)
+            throw new IllegalArgumentException("nao existe");
+
+        if (sala.getDataExclusao() != null) {
+            throw new IllegalArgumentException("Esta sala já está inativada!");
+        }
+
+        sala.setDataExclusao(LocalDateTime.now());
+
+        saladao.alterar(sala);
+
     }
 }

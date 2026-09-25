@@ -43,15 +43,19 @@ public class SalaController {
         return dao.listar();
     }
 
-
-    public void excluir ( Long id){
-
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        try {
             dao.excluir(id);
-
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity alterar(@PathVariable Long id, @RequestBody Sala sala) {
+    public ResponseEntity<Void> alterar(@PathVariable Long id, @RequestBody Sala sala) {
         try {
             sala.setId(id);
             dao.alterar(sala);
@@ -61,14 +65,6 @@ public class SalaController {
         }
     }
 
-
-
-    public void deletar(@PathVariable Long id){
-
-            dao.deletar(id);
-
-
-    }
 
     @GetMapping
     public ResponseEntity<List<Sala>> listar() {
