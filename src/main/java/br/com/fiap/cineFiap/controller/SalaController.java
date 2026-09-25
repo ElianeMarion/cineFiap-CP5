@@ -29,4 +29,13 @@ public class SalaController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping
+    public ResponseEntity<String> cadastrar(@RequestBody Sala sala){
+        try{
+            salaService.cadastrar(sala);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Sala cadastrada com SUCESSO");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala não cadastrada. Erro: " + e.getMessage());
+        }
+    }
 }

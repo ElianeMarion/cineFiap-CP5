@@ -12,5 +12,22 @@ public class SalaService {
 
     public List<Sala> listar(){return salaDAO.listar();}
 
-    public Sala buscaPorId(long id) {return salaDAO.buscarPorId(id);}
+    public Sala buscaPorId(long id){return salaDAO.buscarPorId(id);}
+
+    public void cadastrar(Sala sala){
+        try {
+            if (sala.getNome() == null) {
+                throw new IllegalArgumentException("O nome da sala é OBRIGATÓRIO");
+            }
+            if (sala.getPreco() <= 0) {
+                throw new IllegalArgumentException("O valor deve ser MAIOR QUE ZERO");
+            }
+            if (sala.getDataExclusao() != null) {
+                throw new IllegalArgumentException("Uma sala cadastrada não pode ser excluida no cadastro");
+            }
+            salaDAO.cadastrar(sala);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
 }
