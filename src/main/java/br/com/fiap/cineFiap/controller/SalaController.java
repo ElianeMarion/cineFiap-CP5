@@ -52,9 +52,10 @@ public class SalaController {
 
     }
 
-    public void alterar( Long id, Sala objeto){
-
-            dao.alterar(objeto);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> alterar(@RequestBody Long id, Sala sala){
+        service.alterarSala(sala, id);
+        return ResponseEntity.ok().build();
     }
 
 

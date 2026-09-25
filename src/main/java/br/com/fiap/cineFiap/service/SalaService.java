@@ -15,20 +15,20 @@ public class SalaService {
         this.salaDAO = new SalaDAO();
     }
 
-    public List<Sala> listar(){
+    public List<Sala> listar() {
         return salaDAO.listar();
     }
 
-    public Sala buscarPorId(Long id){
+    public Sala buscarPorId(Long id) {
         var sala = salaDAO.buscarPorId(id);
         if (sala.getDataExclusao() == null)
             return sala;
         return null;
     }
 
-    public void inserirSala(Sala sala){
+    public void inserirSala(Sala sala) {
         try {
-            if (sala.getNome() == null){
+            if (sala.getNome() == null) {
                 throw new IllegalArgumentException("O nome da sala é obrigatório");
             } else if (sala.getPreco() <= 0) {
                 throw new IllegalArgumentException("O valor deve ser maior que 0");
@@ -41,5 +41,19 @@ public class SalaService {
         }
     }
 
-
+    public void alterarSala(Sala sala, Long id) {
+        try {
+            if (sala.getId() == null) {
+                throw new IllegalArgumentException("A sala deve existir");
+            } else if (sala.getDataExclusao() != null) {
+                throw new IllegalArgumentException("A sala não pode ter sido excluída");
+            }
+            salaDAO.alterar(sala);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+    }
 }
+
+
+
