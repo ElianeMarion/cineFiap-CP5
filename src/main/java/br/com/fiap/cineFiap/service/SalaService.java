@@ -14,4 +14,19 @@ public class SalaService {
     public List<Sala> listar() {
         return dao.listar();
     }
+
+    public Sala buscarPorId(Long id) {
+        Sala sala = dao.buscarPorId(id);
+
+        if (sala.getId() == null) {
+            return null;
+        }
+
+        if (sala.getDataExclusao() != null) {
+            return null;
+        }
+
+        return sala;
+    }
 }
+
