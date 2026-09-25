@@ -1,6 +1,7 @@
 package br.com.fiap.cineFiap.controller;
 
 import br.com.fiap.cineFiap.dao.SalaDAO;
+import br.com.fiap.cineFiap.exceptions.FilmeNaoExisteException;
 import br.com.fiap.cineFiap.models.Sala;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,4 +52,12 @@ public class SalaController {
 
 
     }
+
+    @GetMapping
+    public ResponseEntity<List<Sala>> listar() {
+        return ResponseEntity.ok(dao.listar());
+    }
+
+
+
 }
