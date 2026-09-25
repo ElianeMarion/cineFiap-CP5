@@ -38,4 +38,14 @@ public class SalaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala não cadastrada. Erro: " + e.getMessage());
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> alterar(@RequestBody Sala sala, @PathVariable long id){
+        try{
+            salaService.alterar(sala, id);
+            return ResponseEntity.status(HttpStatus.OK).body("Sala alterada com SUCESSO");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sala não alterada. Erro: " + e.getMessage());
+        }
+    }
 }

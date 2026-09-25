@@ -5,6 +5,7 @@ import br.com.fiap.cineFiap.models.Sala;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SalaService {
@@ -26,6 +27,27 @@ public class SalaService {
                 throw new IllegalArgumentException("Uma sala cadastrada não pode ser excluida no cadastro");
             }
             salaDAO.cadastrar(sala);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public void alterar(Sala sala, long id){
+        Sala salaExiste = buscaPorId(id);
+        try {
+            if (!Objects.equals(sala.getId(), salaExiste.getId())){
+                throw new IllegalArgumentException("O ID não corresponte a um item existente");
+            }
+            if (sala.getNome() == null) {
+                throw new IllegalArgumentException("O nome da sala é OBRIGATÓRIO");
+            }
+            if (sala.getPreco() <= 0) {
+                throw new IllegalArgumentException("O valor deve ser MAIOR QUE ZERO");
+            }
+            if (sala.getDataExclusao() != null) {
+                throw new IllegalArgumentException("Uma sala cadastrada não pode ser excluida no cadastro");
+            }
+            salaDAO.alterar(sala);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e);
         }
