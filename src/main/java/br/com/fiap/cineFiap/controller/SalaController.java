@@ -16,8 +16,14 @@ public class SalaController {
     private SalaDAO dao = new SalaDAO();
     private SalaService salaService = new SalaService();
 
-    public void cadastrar(Sala sala) {
-        dao.cadastrar(sala);
+    @PostMapping
+    public ResponseEntity<Sala> cadastrar(@RequestBody Sala sala) {
+
+        Sala salaCadastrada = salaService.cadastrar(sala);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(salaCadastrada);
     }
 
     public List<Sala> salasEmCartaz() {
@@ -53,3 +59,4 @@ public class SalaController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
+
