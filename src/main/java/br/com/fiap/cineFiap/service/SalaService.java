@@ -12,8 +12,15 @@ public class SalaService {
         this.salaDAO = new SalaDAO();
     }
     public List<Sala> listar(){
-        var sala = salaDAO.listar();
-        if(sala != null){
+        if(salaDAO.listar() != null){
+            return salaDAO.listar();
+        }
+        throw new IllegalArgumentException("Nenhuma sala encontrada");
+    }
+
+    public Sala buscarPorId(Long id){
+        var sala = salaDAO.buscarPorId(id);
+        if(sala.getId() != null){
             return sala;
         }
         throw new IllegalArgumentException("Nenhuma sala encontrada");

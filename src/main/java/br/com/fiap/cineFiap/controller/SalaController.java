@@ -16,22 +16,24 @@ public class SalaController {
     private SalaDAO dao = new SalaDAO();
     private final SalaService service;
 
-    public SalaController(SalaService service) {
-        this.service = service;
+    public SalaController() {
+        this.service = new SalaService();
     }
 
-    @PostMapping
-    public void cadastrar( Sala sala){
+//    @PostMapping
+//    public void cadastrar( Sala sala){
+//
+//            dao.cadastrar(sala);
+//
+//    }
 
-            dao.cadastrar(sala);
-
-    }
-
-    @GetMapping("{/id}")
-    public Sala buscarPorId( Long id){
-        return  dao.buscarPorId(id);
-
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Sala> buscarPorId(@PathVariable Long id){
+        var salaExistente = service.buscarPorId(id);
+        if(salaExistente.getId() != null){
+            return ResponseEntity.ok(salaExistente);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping
@@ -41,25 +43,25 @@ public class SalaController {
         }
         return ResponseEntity.notFound().build();
     }
-
-    @DeleteMapping
-    public void excluir ( Long id){
-
-            dao.excluir(id);
-
-    }
-
-    @PutMapping
-    public void alterar( Long id, Sala objeto){
-
-            dao.alterar(objeto);
-    }
-
-    @PutMapping
-    public void deletar(@PathVariable Long id){
-
-            dao.deletar(id);
-
-
-    }
+//
+//    @DeleteMapping
+//    public void excluir ( Long id){
+//
+//            dao.excluir(id);
+//
+//    }
+//
+//    @PutMapping
+//    public void alterar(Sala objeto){
+//
+//            dao.alterar(objeto);
+//    }
+//
+//    @PutMapping
+//    public void deletar(@PathVariable Long id){
+//
+//            dao.deletar(id);
+//
+//
+//    }
 }
