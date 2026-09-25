@@ -17,16 +17,12 @@ public class SalaDAO {
     public List<Sala> listar() {
 
         conexao = ConnectionFactory.obterConexao();
-
         PreparedStatement ps = null;
 
         List<Sala> salas = new ArrayList<>();
 
         try {
-
-            ps = conexao.prepareStatement(
-                    "SELECT * FROM TBL_SALA"
-            );
+            ps = conexao.prepareStatement("SELECT * FROM TBL_SALA");
 
             ResultSet rs = ps.executeQuery();
 
@@ -41,9 +37,7 @@ public class SalaDAO {
                 Timestamp timestamp = rs.getTimestamp(4);
 
                 if (timestamp != null) {
-                    sala.setDataExclusao(
-                            timestamp.toLocalDateTime()
-                    );
+                    sala.setDataExclusao(timestamp.toLocalDateTime());
                 } else {
                     sala.setDataExclusao(null);
                 }
@@ -59,5 +53,45 @@ public class SalaDAO {
         }
 
         return salas;
+    }
+
+    public Sala buscarPorId(Long id) {
+
+        conexao = ConnectionFactory.obterConexao();
+
+        Sala sala = new Sala();
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(
+                    "SELECT * FROM TBL_SALA WHERE ID_SALA = ?"
+            );
+
+            ps.setLong(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                sala.setId(rs.getLong(1));
+                sala.setNome(rs.getString(2));
+                sala.setPreco(rs.getDouble(3));
+
+                Timestamp timestamp = rs.getTimestamp(4);
+
+                if (timestamp != null) {
+                    sala.setDataExclusao(timestamp.toLocalDateTime());
+                } else {
+                    sala.setDataExclusao(null);
+                }
+            }
+
+            ps.close();
+            conexao.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sala;
     }
 }
