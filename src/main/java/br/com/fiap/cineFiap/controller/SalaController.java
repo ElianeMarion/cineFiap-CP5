@@ -47,6 +47,15 @@ public class SalaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PutMapping("/excluir/{id}")
+    public ResponseEntity<Object> excluir(@PathVariable Long id) {
+        try {
+            service.excluirLogicamente(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 
 
